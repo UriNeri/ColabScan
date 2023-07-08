@@ -1,16 +1,30 @@
 # ColabScan
 Making it easier for non-bioinfos to search their data for RdRps.  
-   WORK IN PROGRESS!!!   
-   
+   WORK IN PROGRESS!!!     
+
+   Note! The output of is not intended to be a conclusive or definitive "last word" about anything, only the hmmsearch/search-tool output (match coordinates, alignment statistics etc) providing no metadata apart apart from the match/profile name and info about which public resource the hit came from - therefor it's the user responsibilty to go to (and maybe cite?) the original resource to look for the metadata they provided.
+
 ### TO DO:  
-1. ADD THE TO DO List to here...  
-2. Split the workflow into two notebooks:   
-          *a*. Preprocess - downloads all data (various RNA virus resources NeoRdRp, RVMT, RdRp-Scan, PalmDB), bundles it, maybe deduplicates it, and builds an hmmdb + mmseqsdb +blastdb + whatever. Final step is periodical/on-change deposit in a continous Zenodo repo for archivability/reproducibilty and data (as opposed to code) versioning.  
+1. Add additional public DBs/resources.
+2. Write a guide on how to add more DBs
+3. Split the workflow into two notebooks:   
+          *a*. Preprocess - downloads all data (various RNA virus resources NeoRdRp, RVMT, RdRp-Scan, PalmDB... more to come?), bundles it, maybe deduplicates it, and builds an hmmdb + mmseqsdb +blastdb + whatever. Final step is periodical/on-change deposit in a continous Zenodo repo for archivability/reproducibilty and data (as opposed to code) versioning.  
           *b*. Search - A simplistic "scan" workflow; Takes the user input contigs as a single multifasta file, converts the input nucleic seqs into amino seqs, downloads the DBs from a.'s Zenodo, install the needed search tools on the runtime, and finally searches the for cool bugs.  
           Both a. and b. will be availble from this repo, where we'll accept pull requests adding data-resources to a. 
-          
-Note!! The output of b. is not intended to be a conclusive or definitive "last word" about anything, only the hmmsearch/search-tool output (match coordinates, alignment statistics etc) providing no metadata apart from the match name and the information on which resources the hits came from - it is there for the user responsibilty to go to (and maybe cite?) the original resource to look for the metadata they provided.
+4. Add additional search tools, deduplication & lookup tables, etc. Initally probably will reuse code from RVMT (e.g. [searcher](https://github.com/UriNeri/RVMT/blob/main/Discovery_pipeline/RdRP_searchs/V3_runner_Iter_RdRp_Search_psihmmseqs2.sh) and [profiler](https://github.com/UriNeri/RVMT/blob/main/Domains_Annotation/Profiler_motifs.sh)).
+5. Add heuristic steps to pre-filter the input:   
+"Discard contigs with rRNA/tRNA (infernal/cmscan?) or mapped to silva 16S (bbmap) ?"  
+"Use standard ORF prediction instead of all poossible six-frame translations?"  
+"Upload host genome/transcriptome to use for filtering *likely* non-viral contigs)?"
+6. Add "Advanced" options (better control on flags for whatever search tool used)
+7. Write a user guide /tutorial. 
 
+
+### Resources currently in use
+NeoRdRp  - [GitHub](https://github.com/shoichisakaguchi/NeoRdRp), [Paper](https://doi.org/10.1264/jsme2.ME22001)  
+RVMT - [Zenodo](https://zenodo.org/record/7368133), [GitHub](https://github.com/UriNeri/RVMT), [Paper](https://doi.org/10.1016/j.cell.2022.08.023).  
+RdRp-Scan - [GitHub](https://github.com/JustineCharon/RdRp-scan) [Paper](https://doi.org/10.1093/ve/veac082)    
+   	  ⤷ (which IIRC incorporated PALMdb, [GitHub](https://github.com/rcedgar/palmdb), [Paper](https://doi.org/10.7717/peerj.14055)).
 ### Caveats:  
 1. "More is not always better":  
 *a*. It is very likely that diversifying the subject set of a search can yield more hits that could have been missed otherwise. However, more HMMs doesn't (necceraily) mean more diveristy. There can be a "dimisnhing returns" thing going on here.   
@@ -29,7 +43,7 @@ DB makers - add your DB.
 
 
 ### Closing remarks
-I've decided to make this upon hearing from more and more wet-lab researchers that they keep missing the viruses in their samples if they are only using the tool that is the easiest to use "off the shelf". Giving way to a single tool/approach to monopolise a research niche is (IMO) dangerous. It can make other tools/approaches results be considered by default less reliable just because of lower adoption rate (and not on scientific content grounds). The final nail in the coffin for making this was that I was standing in front of a poster presented by an extremely talented experimentalist (that is also familiar with bioinfo!) who sequenced her dsRNA extractions and shared that the off-the-shelf tool didn’t identify half or so of the sequences she can *experimentally demonstrate* are de-facto viruses, while running an HMM based method was able to help (even though only one such alternative approach was tested..)
+I've decided to make this upon hearing from more and more wet-lab researchers that they keep missing the viruses in their samples if they are only using the tool that is the easiest to use "off the shelf". Giving way to a single tool/approach to monopolise a research niche is (IMO) dangerous. It can make other tools/approaches results' to be considered by default as less reliable just because of their lower adoption rate (and not because of actual scientific content grounds). The final nail in the coffin for making this was that I was standing in front of a poster presented by an extremely talented experimentalist (that is also familiar with bioinfo!) who sequenced her dsRNA extractions and shared that the off-the-shelf tool didn’t identify half or so of the sequences she can *experimentally demonstrate* are de-facto viruses, while running an HMM based method was able to help (even though only one such alternative approach was tested..)
 
 
 
